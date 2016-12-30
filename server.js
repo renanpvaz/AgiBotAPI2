@@ -1,12 +1,12 @@
 'use strict';
 
-var express = require('express');
-var app = express();
-var port = process.env.port || 8081;
+let express = require('express');
+let app = express();
+let port = process.env.PORT || 5000;
 
 app.get('/verificarCPF', function (req,res) {
-    let cpf = req.query.cpf;
-    var customObj = {
+    const cpf = req.query.cpf;
+    let customObj = {
         'perfilCliente': null,
         'fontePagadora': null,
         'bancoRecebimento': null,
@@ -28,15 +28,14 @@ app.get('/verificarCPF', function (req,res) {
 });
 
 app.get('/simulacao', function (req,res) {
-    let valorQuePodePagar = parseFloat(req.query.vqpp);
-    let valorRecalculado = valorQuePodePagar * 0.85;
-    valorRecalculado = valorRecalculado.toFixed(2);
-    let parcelas = [];
-    let formatter = new Intl.NumberFormat('pt-BR', {
+    const valorQuePodePagar = parseFloat(req.query.vqpp);
+    const valorRecalculado = (valorQuePodePagar * 0.85).toFixed(2);
+    const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         minimumFractionDigits: 2,
     });
+    let parcelas = [];
 
     for (let i = 0; i <=11; i++){
         let valorFormatado = formatter.format(valorRecalculado * (i + 1));
